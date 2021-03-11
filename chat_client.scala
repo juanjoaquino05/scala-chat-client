@@ -17,7 +17,7 @@ var user = ""
 val commands = Map(
     "login" -> "/ID $username",
     "getUsers" -> "/USERLIST",
-    "chat" -> "/CHAT -u $username -m \"$message\"",
+    "chat" -> """/CHAT -u $username -m "$message"""",
     "logout" -> "/CLOSE"
 )
 
@@ -116,10 +116,10 @@ def sendMessage(inputData: String) = {
     val data = inputData.split(":")
     if(data.size > 1 ){
 
-        val username = data(0)
-        val message = data(1)
+        val username = data(0).trim()
+        val message = data(1).trim()
 
-        val chatCommand = commands("chat").replace("$username", user).replace("$message", message)
+        val chatCommand = commands("chat").replace("$username", username).replace("$message", message)
         out.println(chatCommand)
         out.flush()
         last = "chat"
