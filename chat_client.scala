@@ -56,7 +56,11 @@ def getInput() : Boolean = {
     while(true){
         val next = in.next()
         if(next.slice(0,5) == "/CHAT"){
-            println("\nMensaje de usuario:" + next)
+            val userStart = next.indexOf(" -u ")
+            val messageStart = next.indexOf(" -m ")
+            val sender = next.slice(userStart + 3,messageStart)
+            val message = next.substring(messageStart + 3)
+            println(s"\nMensaje de usuario: $sender => $message")
         }else if(last == "getUsers") {
             if (next != "Empty"){
                 println("\nConnected users: " + next)
