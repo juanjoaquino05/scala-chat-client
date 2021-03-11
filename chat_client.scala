@@ -6,7 +6,7 @@ import scala.concurrent.Future
 
 
 
-val s = new Socket(InetAddress.getByName("localhost"), 5000)
+val s = new Socket(InetAddress.getByName("localhost"), 6000)
 lazy val in = new BufferedSource(s.getInputStream()).getLines()
 val out = new PrintStream(s.getOutputStream())
 
@@ -50,7 +50,6 @@ while(true){
     sendMessage(input)
 }
 
-def getValue(x: Option[String]) = x match { case Some(s) => s case None => "" }
 
 def getInput() : Boolean = {
     while(true){
@@ -88,7 +87,7 @@ def getInput() : Boolean = {
 }
 
 def connect(user: String) : String = {
-    val connectCommand = getValue(commands.get("login")).replace("$username", user)
+    val connectCommand = commands("login").replace("$username", user)
     out.println(connectCommand)
     out.flush()
 
@@ -98,7 +97,7 @@ def connect(user: String) : String = {
 }
 
 def getUsers() = {
-    val getUsersCommand = getValue(commands.get("getUsers"))
+    val getUsersCommand = commands("getUsers")
     out.println(getUsersCommand)
     out.flush()
     last = "getUsers"
@@ -106,7 +105,7 @@ def getUsers() = {
 }
 
 def logout() = {
-    val getUsersCommand = getValue(commands.get("logout"))
+    val getUsersCommand = commands("logout")
     out.println(getUsersCommand)
     out.flush()
     last = "logout"
@@ -120,7 +119,7 @@ def sendMessage(inputData: String) = {
         val username = data(0)
         val message = data(1)
 
-        val chatCommand = getValue(commands.get("chat")).replace("$username", user).replace("$message", message)
+        val chatCommand = commands("chat").replace("$username", user).replace("$message", message)
         out.println(chatCommand)
         out.flush()
         last = "chat"
