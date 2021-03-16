@@ -17,7 +17,8 @@ var user = ""
 val commands = Map(
     "login" -> "/ID $username",
     "getUsers" -> "/USERLIST",
-    "chat" -> """/CHAT -u $username -m "$message"""",
+    "chat" -> "/CHAT -u $username -m \"$message\"",
+    "createRoom" -> "/ROOM $roomName",
     "logout" -> "/CLOSE"
 )
 
@@ -80,6 +81,14 @@ def getInput() : Boolean = {
             }else if(next == "Error"){
                 println("\nOcurrio un error en el proceso.")
             }
+        }else if(last == "createRoom"){
+            if(next == "Ok"){
+                println("\nEl Room fue creado correctamente.")
+            }else if(next == "Taken"){
+                println("\nEl nombre del Room ya existe.")
+            }else if(next == "Error"){
+                println("\nOcurrio un error en el proceso.")
+            }
         }
         last = null
     }
@@ -94,6 +103,14 @@ def connect(user: String) : String = {
     val response = in.next()
 
     return response
+}
+
+def createRoom(roomName: String) = {
+    val createRoomCommand = commands("createRoom").replace("$roomName", roomName)
+    out.println(createRoomCommand)
+    out.flush()
+
+    last = "createRoom"
 }
 
 def getUsers() = {
@@ -125,17 +142,29 @@ def sendMessage(inputData: String) = {
         last = "chat"
     }
     else{ //comandos
-        val command = data(0)
-        if(command == "userlist"){
-            getUsers()
-            last = "getUsers"
-        }
-        else if(command == "quit"){
-            logout()
-            last = "logout"
+        val command = data(0).split("/")
+        if(command.size > 1){
+            if(command(0) == "createroom"){
+                var roomName = command(1)
+                createRoom(roomName)
+                last = "createRoom"
+            }else{
+                last = ""
+                println("Invalid command")
+            }
         }else{
-            last = ""
-            println("Invalid command")
+
+            if(command(0) == "userlist"){
+                getUsers()
+                last = "getUsers"
+            }
+            else if(command(0) == "quit"){
+                logout()
+                last = "logout"
+            } else{
+                last = ""
+                println("Invalid command")
+            }
         }
     }
 }
