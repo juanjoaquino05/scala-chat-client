@@ -17,9 +17,12 @@ var user = ""
 val commands = Map(
     "login" -> "/ID $username",
     "getUsers" -> "/USERLIST",
+    "getAllUserRooms" -> "/ROOMLIST",
+    "getAllUserInvites" -> "/INVITELIST",
     "chat" -> "/CHAT -u $username -m \"$message\"",
     "createRoom" -> "/ROOM $roomName",
     "logout" -> "/CLOSE"
+    "getAllRequestsForRoom" -> "/REQUESTLIST $roomName",
 )
 
 while(!connected){
@@ -48,7 +51,7 @@ val future = Future {
 
 while(true){
     val input = readLine("Mensaje a Enviar (username:message) o (command): ")
-    sendMessage(input)
+    processCommand(input)
 }
 
 
@@ -117,8 +120,32 @@ def getUsers() = {
     val getUsersCommand = commands("getUsers")
     out.println(getUsersCommand)
     out.flush()
-    last = "getUsers"
 
+    last = "getUsers"
+}
+
+def getAllUserRooms() = {
+    val getAllUserRoomsCommand = commands("getAllUserRooms")
+    out.println(getAllUserRoomsCommand)
+    out.flush()
+
+    last = "getAllUserRooms"
+}
+
+def getAllUserInvites() = {
+    val getAllUserInvitesCommand = commands("getAllUserInvites")
+    out.println(getAllUserInvitesCommand)
+    out.flush()
+
+    last = "getAllUserInvites"
+}
+
+def getAllRequestsForRoom(roomName : String) = {
+    val getAllRequestsForRoomCommand = commands("getAllRequestsForRoom").replace("$roomName", roomName)
+    out.println(getAllRequestsForRoomCommand)
+    out.flush()
+
+    last = "getAllRequestsForRoom"
 }
 
 def logout() = {
@@ -129,17 +156,20 @@ def logout() = {
 
 }
 
-def sendMessage(inputData: String) = {
+def sendMessage(message: String, username: String) = {
+    val chatCommand = commands("chat").replace("$username", username).replace("$message", message)
+    out.println(chatCommand)
+    out.flush()
+    last = "chat"
+}
+
+def processCommand(inputData: String) = {
     val data = inputData.split(":")
     if(data.size > 1 ){
-
         val username = data(0).trim()
         val message = data(1).trim()
 
-        val chatCommand = commands("chat").replace("$username", username).replace("$message", message)
-        out.println(chatCommand)
-        out.flush()
-        last = "chat"
+        sendMessage(message, username)
     }
     else{ //comandos
         val command = data(0).split("/")
@@ -148,7 +178,11 @@ def sendMessage(inputData: String) = {
                 var roomName = command(1)
                 createRoom(roomName)
                 last = "createRoom"
-            }else{
+            } else if(command(0) == "getallrequestsforroom"){
+                var chatRoomName = command(1)
+                getAllRequestsForRoom(chatRoomName)
+                last = "getAllRequestsForRoom"
+            } else {
                 last = ""
                 println("Invalid command")
             }
@@ -157,6 +191,16 @@ def sendMessage(inputData: String) = {
             if(command(0) == "userlist"){
                 getUsers()
                 last = "getUsers"
+            }
+
+            if(command(0) == "getalluserrooms"){
+                getAllUserRooms()
+                last = "getAllUserRooms"
+            }
+            
+            if(command(0) == "getalluserinvites"){
+                getAllUserInvites()
+                last = "getAllUserInvites"
             }
             else if(command(0) == "quit"){
                 logout()
@@ -167,5 +211,13 @@ def sendMessage(inputData: String) = {
             }
         }
     }
+}
+
+def validateResponse() = {
+    val getUsersCommand = commands("getUsers")
+    out.println(getUsersCommand)
+    out.flush()
+    last = "getUsers"
+
 }
 s.close()
