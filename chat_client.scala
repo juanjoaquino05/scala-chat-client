@@ -62,12 +62,9 @@ while(true){
 def getInput() : Boolean = {
     while(true){
         val next = in.next()
-        if(next.slice(0,5) == "/CHAT"){
-            val userStart = next.indexOf(" -u ")
-            val messageStart = next.indexOf(" -m ")
-            val sender = next.slice(userStart + 3,messageStart)
-            val message = next.substring(messageStart + 3)
-            println(s"\nMensaje de usuario: $sender => $message")
+        if(next.slice(0,8) == "/MESSAGE"){
+            val message = next.substring(8)
+            println(s"\nMensaje de usuario: $message")
         }else if(next.slice(0,11) == "/ROOMREJECT"){
             val salida = next.substring(11)
             println(s"\nRechazo de usuario: $salida")
