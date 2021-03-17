@@ -19,7 +19,7 @@ val commands = Map(
     "getUsers" -> "/USERLIST",
     "getAllUserRooms" -> "/ROOMLIST",
     "getAllUserInvites" -> "/INVITELIST",
-    "chat" -> "/CHAT -u $username -m \"$message\"",
+    "chat" -> "/CHAT $type $username -m \"$message\"",
     "createRoom" -> "/ROOM $roomName",
     "rejectRoom" -> "/REJECT $roomName",
     "joinRoom" -> "/JOIN $roomName",
@@ -91,7 +91,7 @@ def getInput() : Boolean = {
             if(next == "Ok"){
 
             }else if(next == "NotFound"){
-                println("\nUsuario no encontrado.")
+                println("\nNo encontrado.")
             }else if(next == "Error"){
                 println("\nOcurrio un error en el proceso.")
             }
@@ -242,8 +242,16 @@ def logout() = {
 
 }
 
-def sendMessage(message: String, username: String) = {
-    val chatCommand = commands("chat").replace("$username", username).replace("$message", message)
+def sendMessage(message: String, username: String, messageType: String) = {
+    var chatCommand = commands("chat").replace("$message", message)
+
+    if(messageType == "u"){
+        chatCommand = chatCommand.replace("$type","-u").replace("$username",username)
+    } else if(messageType == "g"){
+        chatCommand = chatCommand.replace("$type","-g").replace("$username",username)
+    } else if(messageType == "a"){
+        chatCommand = chatCommand.replace("$type","").replace("$username","")
+    }
     out.println(chatCommand)
     out.flush()
     last = "chat"
@@ -252,10 +260,15 @@ def sendMessage(message: String, username: String) = {
 def processCommand(inputData: String) = {
     val data = inputData.split(":")
     if(data.size > 1 ){
-        val username = data(0).trim()
-        val message = data(1).trim()
-
-        sendMessage(message, username)
+        val messageType = data(0).trim
+        val username = data(1).trim()
+        val message = data(2).trim()
+        if(messageType == "a" || messageType == "g" || messageType == "u"){
+            sendMessage(message, username, messageType)
+        }else{
+            println("Comando invalido")
+        }
+        
     }
     else{ //comandos
         val command = data(0).split("/")
