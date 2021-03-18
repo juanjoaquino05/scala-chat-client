@@ -126,7 +126,7 @@ def getInput() : Boolean = {
         } 
         else if(last == "addUsers"){
             if(next == "Ok"){
-                println("\nAñadido correctamente.")
+                println("\nEnviado correctamente.")
             }else if(next == "UserNotFound"){
                 println("\nNombre de usuario no fue encontrado.")
             } else if(next == "RoomNotFound"){
@@ -138,7 +138,7 @@ def getInput() : Boolean = {
         }
         else if(last == "joinRoom"){
             if(next == "Ok"){
-                println("\nEl Room fue creado correctamente.")
+                println("\nEntro correctamente.")
             }else if(next == "Already"){
                 println("\nYa esta unido al Room.")
             }else if(next == "NotFound"){
@@ -192,7 +192,7 @@ def addUsers(forced: Boolean, roomName: String, names: String) = {
     if(forced){
         addUsersCommand = addUsersCommand.replace("$f","-f")
     }else{
-        addUsersCommand = addUsersCommand.replace("$f","")
+        addUsersCommand = addUsersCommand.replace("$f ","")
     }
     addUsersCommand = addUsersCommand + " " + names
     out.println(addUsersCommand)
