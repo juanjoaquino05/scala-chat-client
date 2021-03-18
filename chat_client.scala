@@ -157,13 +157,13 @@ def connect(user: String) : String = {
 }
 
 def addUsers(forced: Boolean, roomName: String, names: String) = {
-    val addUsersCommand = commands("createRoom").replace("$roomName", roomName)
+    val addUsersCommand = commands("addUsers").replace("$roomName", roomName)
     if(forced){
         addUsersCommand.replace("$f","-f")
     }else{
         addUsersCommand.replace("$f","")
     }
-    addUsersCommand + " " + names.mkString(" ")
+    addUsersCommand + " " + names
     out.println(addUsersCommand)
     out.flush()
 
@@ -183,7 +183,7 @@ def quitRoom(roomName: String) = {
     out.println(quitRoomCommand)
     out.flush()
 
-    last = "createRoom"
+    last = "quitRoom"
 }
 
 def rejectRoom(roomName: String) = {
@@ -276,11 +276,9 @@ def processCommand(inputData: String) = {
             if(command(0) == "createroom"){
                 var roomName = command(1)
                 createRoom(roomName)
-                last = "createRoom"
-            } else if(command(0) == "getallrequestsforroom"){
+            } else if(command(0) == "getroomrequests"){
                 var chatRoomName = command(1)
                 getAllRequestsForRoom(chatRoomName)
-                last = "getAllRequestsForRoom"
             }else if(command(0) == "rejectroom"){
                 var chatRoomName = command(1)
                 rejectRoom(chatRoomName)
@@ -291,11 +289,11 @@ def processCommand(inputData: String) = {
              else if(command(0) == "joinroom"){
                 var chatRoomName = command(1)
                 joinRoom(chatRoomName)
-            } else if(command(0) == "adduser"){
+            } else if(command(0) == "addusers"){
                 val forced = command(1) == "f"
                 val chatRoomName = command(2)
                 val names = command(3)
-                joinRoom(chatRoomName)
+                addUsers(forced,chatRoomName,names)
             }
             else {
                 last = null
@@ -305,21 +303,12 @@ def processCommand(inputData: String) = {
 
             if(command(0) == "userlist"){
                 getUsers()
-                last = "getUsers"
-            }
-
-            if(command(0) == "getalluserrooms"){
+            } else if(command(0) == "getrooms"){
                 getAllUserRooms()
-                last = "getAllUserRooms"
-            }
-            
-            if(command(0) == "getalluserinvites"){
+            } else if(command(0) == "getinvites"){
                 getAllUserInvites()
-                last = "getAllUserInvites"
-            }
-            else if(command(0) == "close"){
+            } else if(command(0) == "close"){
                 logout()
-                last = "logout"
             } else{
                 last = null
                 println("Invalid command")
