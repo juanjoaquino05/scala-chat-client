@@ -188,13 +188,13 @@ def connect(user: String) : String = {
 }
 
 def addUsers(forced: Boolean, roomName: String, names: String) = {
-    val addUsersCommand = commands("addUsers").replace("$roomName", roomName)
+    var addUsersCommand = commands("addUsers").replace("$roomName", roomName)
     if(forced){
-        addUsersCommand.replace("$f","-f")
+        addUsersCommand = addUsersCommand.replace("$f","-f")
     }else{
-        addUsersCommand.replace("$f","")
+        addUsersCommand = addUsersCommand.replace("$f","")
     }
-    addUsersCommand + " " + names
+    addUsersCommand = addUsersCommand + " " + names
     out.println(addUsersCommand)
     out.flush()
 
@@ -320,7 +320,7 @@ def processCommand(inputData: String) = {
              else if(command(0) == "joinroom"){
                 var chatRoomName = command(1)
                 joinRoom(chatRoomName)
-            } else if(command(0) == "addusers"){
+            } else if(command(0) == "addusers" && command.size > 3){
                 val forced = command(1) == "f"
                 val chatRoomName = command(2)
                 val names = command(3)
