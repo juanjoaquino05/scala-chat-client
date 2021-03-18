@@ -122,8 +122,10 @@ def getInput() : Boolean = {
         else if(last == "addUsers"){
             if(next == "Ok"){
                 println("\nAñadido correctamente.")
-            } else if(next == "NotFound"){
+            }else if(next == "UserNotFound"){
                 println("\nNombre de usuario no fue encontrado.")
+            } else if(next == "RoomNotFound"){
+                println("\nNombre de sala no fue encontrado.")
             }
             else if(next == "Error"){
                 println("\nOcurrio un error en el proceso.")
@@ -297,7 +299,7 @@ def processCommand(inputData: String) = {
             }
             else {
                 last = null
-                println("Invalid command")
+                println("Comando invalido")
             }
         }else{
 
@@ -311,7 +313,7 @@ def processCommand(inputData: String) = {
                 logout()
             } else{
                 last = null
-                println("Invalid command")
+                println("Comando invalido")
             }
         }
     }
