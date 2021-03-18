@@ -82,7 +82,7 @@ def getInput() : Boolean = {
             println(s"\nFue invitado a sala: $salida")
         }else if(last == "getUsers") {
             if (next != "Empty"){
-                println("\nConnected users: " + next)
+                println("\nUsuarios conectados: " + next)
             }else if(next == "Empty"){
                 println("No hay usuarios registrados.")
             }
@@ -153,7 +153,7 @@ def getInput() : Boolean = {
             }else if(next == "Empty"){
                 println("No hay usuarios registrados.")
             }else{
-                println("\nConnected users: " + next)
+                println("\nLista de invitaciones: " + next)
             }
         }else if(last == "getAllUserRooms") {
             if (next == "Error"){
@@ -161,7 +161,7 @@ def getInput() : Boolean = {
             }else if(next == "Empty"){
                 println("No hay usuarios registrados.")
             }else{
-                println("\nConnected users: " + next)
+                println("\nLista de salas: " + next)
             }
         }else if(last == "getAllRequestsForRoom") {
             if (next == "Error"){
