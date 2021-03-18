@@ -80,8 +80,7 @@ def getInput() : Boolean = {
         } else if(next.slice(0,8) == "/INVITED"){
             val salida = next.substring(8)
             println(s"\nFue invitado a sala: $salida")
-        }
-        else if(last == "getUsers") {
+        }else if(last == "getUsers") {
             if (next != "Empty"){
                 println("\nConnected users: " + next)
             }else if(next == "Empty"){
@@ -147,6 +146,30 @@ def getInput() : Boolean = {
             }
             else if(next == "Error"){
                 println("\nOcurrio un error en el proceso.")
+            }
+        }else if(last == "getAllUserInvites") {
+            if (next == "Error"){
+                println("\nOcurrio un error en el proceso.")
+            }else if(next == "Empty"){
+                println("No hay usuarios registrados.")
+            }else{
+                println("\nConnected users: " + next)
+            }
+        }else if(last == "getAllUserRooms") {
+            if (next == "Error"){
+                println("\nOcurrio un error en el proceso.")
+            }else if(next == "Empty"){
+                println("No hay usuarios registrados.")
+            }else{
+                println("\nConnected users: " + next)
+            }
+        }else if(last == "getAllRequestsForRoom") {
+            if (next == "Error"){
+                println("\nOcurrio un error en el proceso.")
+            }else if(next == "Empty"){
+                println("No hay usuarios registrados.")
+            }else{
+                println("\nConnected users: " + next)
             }
         }
         last = null
