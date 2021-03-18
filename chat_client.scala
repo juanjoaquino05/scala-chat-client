@@ -290,7 +290,7 @@ def sendMessage(message: String, username: String, messageType: String) = {
 
 def processCommand(inputData: String) = {
     val data = inputData.split(":")
-    if(data.size > 1 ){
+    if(data.size > 2 ){
         val messageType = data(0).trim
         val username = data(1).trim()
         val message = data(2).trim()
