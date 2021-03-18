@@ -84,7 +84,7 @@ def getInput() : Boolean = {
             if (next != "Empty"){
                 println("\nUsuarios conectados: " + next)
             }else if(next == "Empty"){
-                println("No hay usuarios registrados.")
+                println("No hay usuarios conectados.")
             }
         }else if(last == "logout"){
             if(next == "Ok"){
@@ -151,7 +151,7 @@ def getInput() : Boolean = {
             if (next == "Error"){
                 println("\nOcurrio un error en el proceso.")
             }else if(next == "Empty"){
-                println("No hay usuarios registrados.")
+                println("No hay invitaciones.")
             }else{
                 println("\nLista de invitaciones: " + next)
             }
@@ -159,7 +159,7 @@ def getInput() : Boolean = {
             if (next == "Error"){
                 println("\nOcurrio un error en el proceso.")
             }else if(next == "Empty"){
-                println("No hay usuarios registrados.")
+                println("No hay salas.")
             }else{
                 println("\nLista de salas: " + next)
             }
@@ -167,9 +167,9 @@ def getInput() : Boolean = {
             if (next == "Error"){
                 println("\nOcurrio un error en el proceso.")
             }else if(next == "Empty"){
-                println("No hay usuarios registrados.")
+                println("No solicitudes.")
             }else{
-                println("\nConnected users: " + next)
+                println("\nLista de solicitudes: " + next)
             }
         }
         last = null
