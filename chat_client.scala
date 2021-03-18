@@ -74,6 +74,12 @@ def getInput() : Boolean = {
         } else if(next.slice(0,9) == "/ROOMQUIT"){
             val salida = next.substring(9)
             println(s"\nSalida de usuario: $salida")
+        } else if(next.slice(0,6) == "/ADDED"){
+            val salida = next.substring(6)
+            println(s"\nFue añadido a sala: $salida")
+        } else if(next.slice(0,8) == "/INVITED"){
+            val salida = next.substring(8)
+            println(s"\nFue invitado a sala: $salida")
         }
         else if(last == "getUsers") {
             if (next != "Empty"){
